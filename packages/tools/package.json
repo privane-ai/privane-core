@@ -1,6 +1,6 @@
 {
   "name": "@privane/tools",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Unified tool execution fabric and sandboxed local adapters for sovereign AI",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
