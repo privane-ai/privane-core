@@ -1,10 +1,27 @@
 {
   "name": "@privane/engine",
-  "version": "1.0.1",
-  "description": "Headless browser-native local AI inference runtime engine",
+  "version": "1.0.2",
+  "description": "Browser-native local AI runtime with WebGPU acceleration.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "type": "module",
+  "keywords": [
+    "ai",
+    "llm",
+    "local-ai",
+    "webgpu",
+    "gguf",
+    "ai-agents",
+    "mcp",
+    "playwright",
+    "browser-automation",
+    "openai-compatible",
+    "local-llm",
+    "edge-ai",
+    "sovereign-ai",
+    "agent-runtime",
+    "tool-execution"
+  ],
   "scripts": {
     "build": "tsc"
   },
