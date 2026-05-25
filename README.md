@@ -22,8 +22,9 @@ Privane is the **execution infrastructure for sovereign AI**. It enables develop
 The diagram below outlines how the open-source client-side modules of the Privane developer operating system delegate commands to stateless managed gateways and hosted browsers:
 
 <p align="center">
-  <img src="../privane-dev-docs/public/privane_system_diagram.png" width="80%" alt="Privane System Architecture" />
+  <img src="assets/privane_system_diagram.png" width="80%" alt="Privane System Architecture" />
 </p>
+
 
 ---
 
@@ -95,13 +96,15 @@ We only store transient, encrypted OAuth access states to negotiate SaaS connect
 
 ---
 
-## 🤝 Infrastructure Ecosystem Partners
+## 🤝 Infrastructure Ecosystem Partners (Looking for Partners!)
 
-Privane is built on top of high-performance modern compute, browser, and database networks:
+We are actively seeking compute, vector index, and browser virtualization infrastructure partners to help expand our open-source sovereign AI execution ecosystem. If your team builds in these categories, please reach out to collaborate!
 
-* **Compute:** [Together AI], [Groq]
-* **Virtual Headless Browsers:** [Browserbase], [PinchTab]
-* **Local Memory Indexes:** [Qdrant], [Pinecone]
+* **Compute & GPU Infrastructure:** Standardizing high-throughput local and remote edge compute integrations.
+* **Browser Virtualization Clusters:** Gating headless automation sessions to secure remote virtual clusters.
+* **Vector & Memory Indexers:** Standardizing low-latency private semantic searches natively on secure silicon.
+
+
 
 ---
 
