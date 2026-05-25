@@ -1,0 +1,23 @@
+# Dependency Directories
+node_modules/
+
+# TypeScript Build Compilation Targets
+dist/
+*.tsbuildinfo
+
+# Models & Large Weights Caches
+*.gguf
+.privane/
+
+# Environment Configurations & API Keys
+.env
+.env.local
+.env.*
+
+# Local Sandbox Test Outputs
+sandbox_test/
+
+# System Metadata Logs
+.DS_Store
+*.log
+npm-debug.log*

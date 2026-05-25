@@ -1,0 +1,17 @@
+{
+  "name": "privane-core-monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "dev:cli": "npm run dev --workspace=packages/cli",
+    "build": "npm run build --workspaces"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.24",
+    "tsx": "^4.22.3",
+    "typescript": "^5.9.3"
+  }
+}

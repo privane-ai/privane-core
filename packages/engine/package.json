@@ -1,0 +1,11 @@
+{
+  "name": "@privane/engine",
+  "version": "1.0.0",
+  "description": "Headless browser-native local AI inference runtime engine",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "type": "module",
+  "scripts": {
+    "build": "tsc"
+  }
+}
