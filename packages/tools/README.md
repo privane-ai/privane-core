@@ -1,15 +1,21 @@
 # @privane/tools
 
-> Unified tool execution fabric and sandboxed local adapters for sovereign AI.
+> Unified local and cloud tool execution SDK for AI agents.
 
-`@privane/tools` is the security and execution layer for the **Privane** developer operating system. It provides traversal-proof filesystem sandboxes, database query mutation guards, and secure, stateless cloud gateway dispatchers to bridge local AI reasoning loops with global automation safely.
+`@privane/tools` is the security, isolation, and execution layer for the **Privane** developer operating system. It provides traversal-proof filesystem sandboxes and safe database query locks for local execution, alongside secure, stateless cloud gateway dispatchers to bridge local AI reasoning loops with global automation safely.
+
+---
+
+## ⚡ Genuinely Useful Locally
+
+We believe open-source tool libraries should never feel crippled or force you onto paid plans. `@privane/tools` is **fully featured and functional locally**—providing complete filesystem sandboxing and relational database guardrails with zero cloud dependencies or mandatory lock-in.
 
 ---
 
 ## Features
 
-* 📁 **Traversal-Proof Filesystem Sandbox:** Lock file mutations within specified workspaces, throwing immediate errors if relative traversals are attempted.
-* 🛡️ **SQLite Guard Adapter:** Intercept raw SQL execution and block destructive mutations (such as `DROP` or `DELETE`) using keyword safety filters.
+* 📁 **Traversal-Proof Filesystem Sandbox:** Lock file mutations strictly within specified local workspaces, throwing immediate errors if relative traversals are attempted.
+* 🛡️ **SQLite Guard Adapter:** Intercept raw SQL execution and block destructive mutations (such as `DROP` or `DELETE`) fully on-device.
 * ☁️ **Stateless Cloud Gateway Client:** Dispatch outbound actions (such as sending Slack notifications or scanning GitHub PRs) over the `api.privane.dev` gateway without leaking tokens or local parameters.
 * 🤖 **Hosted Headless Browser Node:** Command remote Chromium instances and compress raw DOM page structures into high-signal accessibility trees, saving over 95% in token consumption.
 
@@ -25,18 +31,18 @@ npm install @privane/tools
 
 ## Quickstart
 
-### 1. Sandboxed Filesystem Operations
+### 1. Sandboxed Filesystem Operations (100% Local & Free)
 ```javascript
 import { LocalFileSystemTool } from '@privane/tools';
 
 const sandbox = new LocalFileSystemTool({ 
-  allowedDirectory: './sandbox_test' 
+  allowedDirectory: './sandbox' 
 });
 
-// Safe write
-await sandbox.write('report.txt', 'Sovereign standup generated.');
+// Safe local file operations
+await sandbox.write('blockers.txt', 'Sovereign standup digest ready.');
 
-// Traversal attacks are safely caught and aborted:
+// Traversal attacks are safely caught and aborted natively:
 try {
   await sandbox.read('../../../etc/passwd');
 } catch (err) {
@@ -45,23 +51,29 @@ try {
 ```
 
 ### 2. Dispatches Over Stateless Cloud Gates
+When you are ready to enhance your workflow with outbound integrations, securely delegate commands through stateless cloud connect gates:
 ```javascript
-import { ManagedToolGateway } from '@privane/tools';
+import { tools } from '@privane/tools';
 
-const gateway = new ManagedToolGateway({
-  apiKey: process.env.PRIVANE_API_KEY
-});
+// Fetch standard connectors (integrated with PinchTab/Browserbase)
+const github = tools.get('github');
 
-// Dispatch Slack message ephemerally without leaking context indices
-const result = await gateway.dispatch({
-  target: 'slack',
-  action: 'sendMessage',
-  payload: {
-    channel: '#engineering-standups',
-    text: 'Sovereign PR summary ready for review.'
-  }
+const result = await github.execute({
+  action: 'scanPullRequests',
+  payload: { repo: 'privane-ai/privane-core' }
 });
 ```
+
+---
+
+## 🚀 Built with Privane
+
+Developers use `@privane/tools` to construct rich, sovereign AI workflows including:
+* 💻 **Local AI Copilots:** Code completions and review loops directly in terminal interfaces.
+* 🌐 **Sovereign Browser Agents:** Virtualized web scrapers that reason locally before performing state updates.
+* 🏢 **Internal Enterprise Assistants:** Secure document search tools that never leak proprietary context.
+* 🔌 **Offline AI Systems:** Volunteer networks and remote devices working without active network feeds.
+* 🐙 **GitHub Workflow Agents:** Automated pull request scanners analyzing code blocking team tasks.
 
 ---
 

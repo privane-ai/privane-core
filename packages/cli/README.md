@@ -1,8 +1,14 @@
 # privane-cli
 
-> Unified CLI daemon and REST server orchestration engine for sovereign AI.
+> CLI runtime and OpenAI-compatible local AI server.
 
 `privane-cli` is the local daemon executor and command-line companion tool for the **Privane** developer operating system. It boots an OpenAI-compatible REST server locally, enabling any LLM client, script, or editor extension to stream chat completions running 100% offline on on-device hardware.
+
+---
+
+## ⚡ Genuinely Useful Locally
+
+We believe open-source toolkits should be robust and functional out of the box. `privane-cli` is **fully featured and functional locally**—spawning local REST servers, fetching model weights, and streaming Server-Sent Events (SSE) completely offline on native CPU/GPU hardware.
 
 ---
 
@@ -17,7 +23,7 @@
 
 ## Installation
 
-Install globally to access the `privane` daemon command:
+Install globally to access the unified `privane` command:
 
 ```bash
 npm install -g privane-cli
@@ -44,6 +50,17 @@ curl http://localhost:8080/v1/chat/completions \
     "stream": true
   }'
 ```
+
+---
+
+## 🚀 Built with Privane
+
+Developers use `privane-cli` to construct rich, sovereign AI workflows including:
+* 💻 **Local AI Copilots:** Code completions and review loops directly in terminal interfaces.
+* 🌐 **Sovereign Browser Agents:** Virtualized web scrapers that reason locally before performing state updates.
+* 🏢 **Internal Enterprise Assistants:** Secure document search tools that never leak proprietary context.
+* 🔌 **Offline AI Systems:** Volunteer networks and remote devices working without active network feeds.
+* 🐙 **GitHub Workflow Agents:** Automated pull request scanners analyzing code blocking team tasks.
 
 ---
 

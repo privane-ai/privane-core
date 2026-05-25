@@ -17,6 +17,16 @@
 
 Privane is the **execution infrastructure for sovereign AI**. It enables developers to construct autonomous, production-grade AI software agents that run heavy cognitive reasoning loops fully locally on native hardware, while securely delegating complex outbound web actions to managed cloud execution gates.
 
+---
+
+## ⚡ Genuinely Useful Locally
+
+We believe open-source AI tools should never feel crippled or behave as a "bait-and-switch" for SaaS products. Privane's open-core monorepo is **100% complete and fully featured locally**—running completely offline on native CPU/GPU hardware. 
+
+Outbound cloud gates (like headless Chromium clusters and SaaS connector bridges) are completely optional **enhancements** to expand your agent's capabilities globally, rather than a proprietary locking gate.
+
+---
+
 ## 📌 Unified Architecture
 
 The diagram below outlines how the open-source client-side modules of the Privane developer operating system delegate commands to stateless managed gateways and hosted browsers:
@@ -25,6 +35,15 @@ The diagram below outlines how the open-source client-side modules of the Privan
   <img src="assets/privane_system_diagram.png" width="80%" alt="Privane System Architecture" />
 </p>
 
+---
+
+## 📦 Monorepo Cohesion (The 3 Pillars)
+
+To preserve strong architectural cohesion, the Privane ecosystem is concentrated into exactly **three core workspace packages**—preventing package fragmentation:
+
+1. **[`@privane/engine`](file:///Users/malik/Downloads/sivra-website/privane-core/packages/engine)** — Browser-native local AI runtime with WebGPU acceleration.
+2. **[`@privane/tools`](file:///Users/malik/Downloads/sivra-website/privane-core/packages/tools)** — Unified local and cloud tool execution SDK for AI agents.
+3. **[`privane-cli`](file:///Users/malik/Downloads/sivra-website/privane-core/packages/cli)** — CLI runtime and OpenAI-compatible local AI server.
 
 ---
 
@@ -38,6 +57,17 @@ Privane is highly visual. Running `node magic-demo.js` executes a complete stand
 4. **Cloud-Side DOM Pruning:** Compresses raw PR layout HTML into clean, high-signal accessibility trees, achieving **95.3% token savings** before returning it local-side.
 5. **Private Local Reasoning:** The local model summarizes codebase edits and isolates team blockers fully on secure local CPU/GPU silicon.
 6. **Slack Standup Dispatch:** Secures Standup digest notification offloads to team channels via cloud gateway webhooks.
+
+---
+
+## 🚀 Built with Privane
+
+Developers use the Privane runtime to build secure, offline-first AI applications:
+* 💻 **Local AI Copilots:** Code completions and review loops directly in terminal interfaces.
+* 🌐 **Sovereign Browser Agents:** Virtualized web scrapers that reason locally before performing state updates.
+* 🏢 **Internal Enterprise Assistants:** Secure document search tools that never leak proprietary context.
+* 🔌 **Offline AI Systems:** Volunteer networks and remote devices working without active network feeds.
+* 🐙 **GitHub Workflow Agents:** Automated pull request scanners analyzing code blocking team tasks.
 
 ---
 
@@ -61,7 +91,7 @@ node packages/cli/dist/index.js serve
 ```javascript
 import { Engine } from '@privane/engine';
 
-const engine = new Engine({ backend: 'cpu' });
+const engine = new Engine();
 await engine.load('gemma-2b-instruct');
 
 const stream = engine.generate({ prompt: "Synthesize team blockers for PR #12." });
@@ -103,8 +133,6 @@ We are actively seeking compute, vector index, and browser virtualization infras
 * **Compute & GPU Infrastructure:** Standardizing high-throughput local and remote edge compute integrations.
 * **Browser Virtualization Clusters:** Gating headless automation sessions to secure remote virtual clusters.
 * **Vector & Memory Indexers:** Standardizing low-latency private semantic searches natively on secure silicon.
-
-
 
 ---
 
