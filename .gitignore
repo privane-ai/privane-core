@@ -13,6 +13,7 @@ dist/
 .env
 .env.local
 .env.*
+.npmrc
 
 # Local Sandbox Test Outputs
 sandbox_test/
