@@ -6,7 +6,7 @@
 
 <p align="center">
   <a href="https://github.com/privane-ai/privane-core">
-    <img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License" />
+    <img src="https://img.shields.io/badge/License-Apache_2.0-blue.svg" alt="License" />
   </a>
   <a href="https://npmjs.com/org/privane">
     <img src="https://img.shields.io/npm/v/@privane/engine.svg" alt="npm version" />
@@ -110,4 +110,4 @@ We are actively seeking compute, vector index, and browser virtualization infras
 
 ## 📄 License
 
-Privane is released under the **MIT License**. Build sovereign agents freely!
+Privane is released under the **Apache-2.0 License**. Build sovereign agents freely!
