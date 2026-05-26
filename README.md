@@ -21,19 +21,48 @@ Privane is the **execution infrastructure for sovereign AI**. It enables develop
 
 ## ⚡ Genuinely Useful Locally
 
-We believe open-source AI tools should never feel crippled or behave as a "bait-and-switch" for SaaS products. Privane's open-core monorepo is **100% complete and fully featured locally**—running completely offline on native CPU/GPU hardware. 
-
-Outbound cloud gates (like headless Chromium clusters and SaaS connector bridges) are completely optional **enhancements** to expand your agent's capabilities globally, rather than a proprietary locking gate.
+We believe open-source AI tools should never feel crippled or behave as a "bait-and-switch" for SaaS products. Privane's open-core monorepo is **100% complete and fully featured locally**—running completely offline on native CPU/GPU hardware.
 
 ---
 
-## 📌 Unified Architecture
+## ⚙️ How It Works (The Local Lifecycle)
 
-The diagram below outlines how the open-source client-side modules of the Privane developer operating system delegate commands to stateless managed gateways and hosted browsers:
+Privane is built around a completely automated, zero-configuration local workflow:
 
-<p align="center">
-  <img src="assets/privane_system_diagram.png" width="80%" alt="Privane System Architecture" />
-</p>
+```mermaid
+sequenceDiagram
+    participant Dev as Developer / Web App
+    participant CLI as Privane CLI Daemon
+    participant Cache as Local Weight Cache (~/.privane)
+    participant Engine as Engine Runtime (WebGPU/Metal)
+
+    Dev->>CLI: POST /v1/chat/completions (messages)
+    CLI->>Cache: Check if model.gguf exists
+    alt Model Not Cached
+        Cache-->>CLI: Missing
+        CLI->>CLI: Trigger automated GGUF weight downloader (progress bar)
+    end
+    CLI->>Engine: Lazily load instruct weights
+    Engine-->>CLI: Compile to secure CPU/GPU RAM
+    CLI-->>Dev: HTTP 200 Stream (Server-Sent Events)
+```
+
+### 1. Fire Up the Server Daemon
+Expose an OpenAI-compliant completions endpoint running locally at `http://localhost:8080/v1`:
+```bash
+node packages/cli/dist/index.js serve
+```
+
+### 2. Auto-cached Lazy Weight Pulling
+When you dispatch your first completion request, the server automatically checks your local cache. If the model weights are missing, it triggers an automated download with a live ticking progress bar directly in your terminal:
+```text
+📥 Initiating GGUF weight pull from secure CDN for [gemma-2b-instruct]...
+File: gemma-2b-instruct.gguf (approx 2.15 GB)
+Downloading: [■■■■■■■■■■░░░░░░░░░░] 50% (1075.0MB/2150MB) | 48.2 MB/s
+```
+
+### 3. Stream and Chat Natively
+Once the cache is validated, the GGUF weights compile to secure local volatile RAM instantly, and the server begins streaming token-by-token deltas back to your client.
 
 ---
 
@@ -41,22 +70,64 @@ The diagram below outlines how the open-source client-side modules of the Privan
 
 To preserve strong architectural cohesion, the Privane ecosystem is concentrated into exactly **three core workspace packages**—preventing package fragmentation:
 
-1. **[`@privane/engine`](file:///Users/malik/Downloads/sivra-website/privane-core/packages/engine)** — Browser-native local AI runtime with WebGPU acceleration.
-2. **[`@privane/tools`](file:///Users/malik/Downloads/sivra-website/privane-core/packages/tools)** — Unified local and cloud tool execution SDK for AI agents.
-3. **[`privane-cli`](file:///Users/malik/Downloads/sivra-website/privane-core/packages/cli)** — CLI runtime and OpenAI-compatible local AI server.
+1. **[`@privane/engine`](packages/engine)** — Browser-native local AI runtime with WebGPU acceleration.
+2. **[`@privane/tools`](packages/tools)** — Unified local and cloud tool execution SDK for AI agents.
+3. **[`privane-cli`](packages/cli)** — CLI runtime and OpenAI-compatible local AI server.
 
 ---
 
-## ⚡ The Magic Demo (PR Standup Synthesizer)
+## 🚀 Quickstart
 
-Privane is highly visual. Running `node magic-demo.js` executes a complete standalone hybrid orchestration sequence in a secure loop:
+Get the workspace running locally on your development machine:
 
-1. **Local Weight Loading:** Lazily loads `gemma-2b-instruct` in secure, volatile system memory on your local machine.
-2. **Stateless GitHub Gateway Scan:** Fetches unread engineering notifications via secure, stateless cloud connect gates.
-3. **Headless Browser Virtualization:** Commands a headless cloud browser session (integrated with PinchTab/Browserbase) to scan target pull requests.
-4. **Cloud-Side DOM Pruning:** Compresses raw PR layout HTML into clean, high-signal accessibility trees, achieving **95.3% token savings** before returning it local-side.
-5. **Private Local Reasoning:** The local model summarizes codebase edits and isolates team blockers fully on secure local CPU/GPU silicon.
-6. **Slack Standup Dispatch:** Secures Standup digest notification offloads to team channels via cloud gateway webhooks.
+### 1. Install Dependencies
+```bash
+npm install
+npx tsc -b
+```
+
+### 2. Launch Local Server Daemon
+```bash
+node packages/cli/dist/index.js serve
+```
+
+### 3. Chat with the Model (OpenAI-Compatible)
+Since the server exposes standard, fully compliant completions endpoints, you can chat with it using standard clients:
+
+#### Option A: Direct terminal stream (curl)
+```bash
+curl http://localhost:8080/v1/chat/completions \
+  -H "Content-Type: application/json" \
+  -d '{
+    "model": "gemma-2b-instruct",
+    "messages": [{"role": "user", "content": "What is a sovereign AI?"}],
+    "stream": true
+  }'
+```
+
+#### Option B: standard Node.js / Python SDKs
+```javascript
+import OpenAI from 'openai';
+
+const openai = new OpenAI({
+  baseURL: 'http://localhost:8080/v1',
+  apiKey: 'local-key-ignored'
+});
+
+const response = await openai.chat.completions.create({
+  model: 'gemma-2b-instruct',
+  messages: [{ role: 'user', content: 'What is a sovereign AI?' }]
+});
+console.log(response.choices[0].message.content);
+```
+
+#### Option C: Visual Web Workspace (Next.js Dashboard)
+You can boot your Next.js workspace dashboard to chat with the model inside a beautiful Generative UI:
+```bash
+cd ../privane-web
+npm run dev
+```
+*Open `http://localhost:3000` in your browser and open the Chat tab to start chatting.*
 
 ---
 
@@ -68,71 +139,6 @@ Developers use the Privane runtime to build secure, offline-first AI application
 * 🏢 **Internal Enterprise Assistants:** Secure document search tools that never leak proprietary context.
 * 🔌 **Offline AI Systems:** Volunteer networks and remote devices working without active network feeds.
 * 🐙 **GitHub Workflow Agents:** Automated pull request scanners analyzing code blocking team tasks.
-
----
-
-## 🚀 Quickstart
-
-Initialize the local background REST server daemon and fetch chat completions streams using your own quantized weights:
-
-### 1. Install Workspace Dependencies
-```bash
-npm install
-npx tsc -b
-```
-
-### 2. Launch Local Server Daemon
-```bash
-node packages/cli/dist/index.js serve
-```
-*Exposes a standard OpenAI-compatible API running locally at `http://localhost:8080/v1`.*
-
-### 3. Fetch Local Chat Completion Streams
-```javascript
-import { Engine } from '@privane/engine';
-
-const engine = new Engine();
-await engine.load('gemma-2b-instruct');
-
-const stream = engine.generate({ prompt: "Synthesize team blockers for PR #12." });
-for await (const token of stream) {
-  process.stdout.write(token);
-}
-```
-
----
-
-## 🛡️ The Single Most Important Boundary
-
-We enforce a strict physical boundary separating sovereign offline execution from metered cloud systems:
-
-| Local & Keyless (100% Free & Offline) | Managed Cloud Gates (Requires API Key) |
-| :--- | :--- |
-| **Local Inference:** Gemma / Llama CPU/GPU execution | **GitHub Gateway:** Managed OAuth scopes & token persistence |
-| **Local Tools:** Sandboxed filesystem (`LocalFileSystemTool`) | **Slack Gateway:** Webhook proxy gates & dispatch routing |
-| **Offline Databases:** Safe SQLite query filters (`LocalSqliteTool`) | **Hosted Browsers:** Heavy Playwright clusters and DOM pruners |
-| **Core SDKs:** Standard packages and type interfaces | **Cloud Routing:** Distributed session proxies |
-
----
-
-## 🔒 Context Sovereignty & Zero-Storage Promise
-
-We maintain a strict zero-knowledge core. **Privane Cloud never stores or records:**
-* Raw prompts, templates, or system instruction payloads.
-* Local filesystem workspaces or directory paths.
-* SQLite database schemas or outputs.
-
-We only store transient, encrypted OAuth access states to negotiate SaaS connection gates, flushing all payload variables instantly from memory upon execution.
-
----
-
-## 🤝 Infrastructure Ecosystem Partners (Looking for Partners!)
-
-We are actively seeking compute, vector index, and browser virtualization infrastructure partners to help expand our open-source sovereign AI execution ecosystem. If your team builds in these categories, please reach out to collaborate!
-
-* **Compute & GPU Infrastructure:** Standardizing high-throughput local and remote edge compute integrations.
-* **Browser Virtualization Clusters:** Gating headless automation sessions to secure remote virtual clusters.
-* **Vector & Memory Indexers:** Standardizing low-latency private semantic searches natively on secure silicon.
 
 ---
 
