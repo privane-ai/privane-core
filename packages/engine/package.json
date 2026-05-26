@@ -1,6 +1,6 @@
 {
   "name": "@privane/engine",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Browser-native local AI runtime with WebGPU acceleration.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
