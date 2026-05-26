@@ -19,6 +19,12 @@ Privane is the **execution infrastructure for sovereign AI**. It enables develop
 
 ---
 
+<p align="center">
+  <img src="assets/privane-chatui.png" width="100%" alt="Privane Sovereign Local Chat UI" />
+</p>
+
+---
+
 ## ⚡ Genuinely Useful Locally
 
 We believe open-source AI tools should never feel crippled or behave as a "bait-and-switch" for SaaS products. Privane's open-core monorepo is **100% complete and fully featured locally**—running completely offline on native CPU/GPU hardware.
@@ -91,10 +97,24 @@ npx tsc -b
 node packages/cli/dist/index.js serve
 ```
 
-### 3. Chat with the Model (OpenAI-Compatible)
-Since the server exposes standard, fully compliant completions endpoints, you can chat with it using standard clients:
+### 3. Chat with the Model
 
-#### Option A: Direct terminal stream (curl)
+Since the local server exposes standard, fully compliant completion endpoints alongside a beautiful web portal, you can chat with it in several ways:
+
+#### Option A: Built-in Sovereign Local Chat UI (Zero-Config Web Dashboard)
+Privane serves a state-of-the-art, fully responsive, glassmorphic chat dashboard directly from the root of the daemon server. No separate compilation, databases, or frontend dev setups required!
+1. Start the server daemon (`node packages/cli/dist/index.js serve`).
+2. Open **`http://localhost:8080/`** (or your custom serve port) in any web browser.
+3. Immediately enjoy a premium chat interface to select cached models, adjust system parameters (temperature, max tokens), track real-time generation speed (t/s), capture Time-To-First-Token (TTFT), view rolling terminal logs, and chat 100% locally with absolute data privacy!
+
+#### Option B: Terminal Chat REPL (Zero-Config)
+You don't need any browser page or HTTP client script. Launch an interactive streaming chat loop directly inside your terminal with:
+```bash
+node packages/cli/dist/index.js chat
+```
+*Note: This will automatically check model caches, trigger the progress bar download if missing, compile it to CPU/GPU memory, and boot a highly responsive interactive chat loop (`user> / assistant>`) natively.*
+
+#### Option C: Direct terminal stream (curl)
 ```bash
 curl http://localhost:8080/v1/chat/completions \
   -H "Content-Type: application/json" \
@@ -105,7 +125,7 @@ curl http://localhost:8080/v1/chat/completions \
   }'
 ```
 
-#### Option B: standard Node.js / Python SDKs
+#### Option D: Standard Node.js / Python SDKs
 ```javascript
 import OpenAI from 'openai';
 
@@ -121,20 +141,13 @@ const response = await openai.chat.completions.create({
 console.log(response.choices[0].message.content);
 ```
 
-#### Option C: Terminal Chat (Zero-Config)
-You don't need any browser page or HTTP client script. Launch an interactive streaming chat loop directly inside your terminal with:
-```bash
-node packages/cli/dist/index.js chat
-```
-*Note: This will automatically check model caches, trigger the progress bar download if missing, compile it to CPU/GPU memory, and boot a highly responsive interactive chat loop (`user> / assistant>`) natively.*
-
-#### Option D: Visual Web Workspace (Next.js Dashboard)
-You can boot your Next.js workspace dashboard to chat with the model inside a beautiful Generative UI:
+#### Option E: Visual Web Workspace (Next.js Dashboard)
+For complex multi-user setups, teams, or dashboard metrics integrated with remote clouds, you can boot the Next.js workspace dashboard:
 ```bash
 cd ../privane-web
 npm run dev
 ```
-*Open `http://localhost:3000` in your browser and open the Chat tab to start chatting.*
+*Open `http://localhost:3045` in your browser and log in to start chatting.*
 
 ---
 
@@ -152,3 +165,9 @@ Developers use the Privane runtime to build secure, offline-first AI application
 ## 📄 License
 
 Privane is released under the **Apache-2.0 License**. Build sovereign agents freely!
+
+---
+
+## ⚖️ Trademarks & Disclaimer
+
+Gemma and other Google-related trademarks, logos, and model names are the property of **Google LLC**. The use of these trademarks and model weights within Privane is solely for demonstration, compatibility, and educational integration purposes. Privane is an independent, open-core software project and is not affiliated with, endorsed by, or sponsored by Google.

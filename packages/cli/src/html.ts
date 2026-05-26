@@ -1212,7 +1212,7 @@ export function getChatHtml(port: number): string {
 
       } catch (err) {
         logToTerminal('Error: Inference failure - ' + err.message, 'error');
-        assistantBubble.innerHTML = '<span style="color: var(--accent-rose); font-weight: 500;">🚨 Local Inference Connection Loss:</span> ' + err.message + '<br><small style="color: var(--text-muted);">Please make sure \'privane serve\' is running in your terminal.</small>';
+        assistantBubble.innerHTML = '<span style="color: var(--accent-rose); font-weight: 500;">🚨 Local Inference Connection Loss:</span> ' + err.message + '<br><small style="color: var(--text-muted);">Please make sure <code>privane serve</code> is running in your terminal.</small>';
       } finally {
         chatInput.disabled = false;
         sendButton.disabled = false;
@@ -1284,11 +1284,11 @@ export function getChatHtml(port: number): string {
       const inlineCodeRegex = new RegExp('\\u0060([^\\u0060\\n]+)\\u0060', 'g');
       escaped = escaped.replace(inlineCodeRegex, '<code class="inline-code">$1</code>');
 
-  // 3. Bold text markdown format
-  escaped = escaped.replace(/\*\*([^\*]+)\*\*/g, '<strong>$1</strong>');
+      // 3. Bold text markdown format
+      escaped = escaped.replace(/\\*\\*([^\\*]+)\\*\\*/g, '<strong>$1</strong>');
 
   // 4. Split and parse lines for Lists and Paragraphs
-  const lines = escaped.split('\n');
+  const lines = escaped.split('\\n');
   let insideList = false;
   let outputLines = [];
 
@@ -1325,7 +1325,7 @@ export function getChatHtml(port: number): string {
     outputLines.push('</ul>');
   }
 
-  return outputLines.join('\n');
+  return outputLines.join('\\n');
 }
 
 // Static code clipboards copier
