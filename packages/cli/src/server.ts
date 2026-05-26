@@ -19,6 +19,9 @@ export function bootstrapServer(port: number) {
   });
 
   const manager = new ModelManager();
+
+  // Serve GGUF weights statically to the browser for WebGPU local-inference
+  app.use('/models', express.static(manager.getModelDirectory()));
   
   // Shared active local engine instance
   const engine = new Engine({ backend: 'cpu' }); // Fallback to CPU for command line verification

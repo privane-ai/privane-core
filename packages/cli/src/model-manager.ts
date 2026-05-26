@@ -65,4 +65,10 @@ export class ModelManager {
       .filter((file) => file.endsWith('.gguf'))
       .map((file) => file.replace('.gguf', ''));
   }
+
+  // Get base model directory
+  public getModelDirectory(): string {
+    this.ensureDirExists();
+    return this.baseDir;
+  }
 }
