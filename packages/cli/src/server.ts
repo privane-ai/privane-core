@@ -2,16 +2,27 @@ import express from 'express';
 import cors from 'cors';
 import { Engine } from '@privane/engine';
 import { ModelManager } from './model-manager.js';
+import { getChatHtml } from './html.js';
 
 export function bootstrapServer(port: number) {
   const app = express();
   app.use(express.json());
   app.use(cors());
 
+  // Serve dynamic self-contained premium dashboard
+  app.get('/', (req, res) => {
+    res.send(getChatHtml(port));
+  });
+
+  app.get('/chat', (req, res) => {
+    res.send(getChatHtml(port));
+  });
+
   const manager = new ModelManager();
   
   // Shared active local engine instance
   const engine = new Engine({ backend: 'cpu' }); // Fallback to CPU for command line verification
+
 
   // 1. GET /v1/models (List Cached Models)
   app.get('/v1/models', (req, res) => {

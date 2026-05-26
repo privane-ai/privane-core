@@ -121,7 +121,14 @@ const response = await openai.chat.completions.create({
 console.log(response.choices[0].message.content);
 ```
 
-#### Option C: Visual Web Workspace (Next.js Dashboard)
+#### Option C: Terminal Chat (Zero-Config)
+You don't need any browser page or HTTP client script. Launch an interactive streaming chat loop directly inside your terminal with:
+```bash
+node packages/cli/dist/index.js chat
+```
+*Note: This will automatically check model caches, trigger the progress bar download if missing, compile it to CPU/GPU memory, and boot a highly responsive interactive chat loop (`user> / assistant>`) natively.*
+
+#### Option D: Visual Web Workspace (Next.js Dashboard)
 You can boot your Next.js workspace dashboard to chat with the model inside a beautiful Generative UI:
 ```bash
 cd ../privane-web

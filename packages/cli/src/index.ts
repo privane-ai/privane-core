@@ -3,6 +3,7 @@
 import { Command } from 'commander';
 import { bootstrapServer } from './server.js';
 import { ModelManager } from './model-manager.js';
+import { bootstrapInteractiveChat } from './chat.js';
 
 const program = new Command();
 
@@ -36,6 +37,15 @@ program
       console.error(`🚨 Run Failure: ${error.message}`);
       process.exit(1);
     }
+  });
+
+// privane chat [model]
+program
+  .command('chat [modelName]')
+  .description('Launch an interactive sovereign terminal chat session')
+  .action(async (modelName) => {
+    const selectedModel = modelName || 'gemma-2b-instruct';
+    await bootstrapInteractiveChat(selectedModel);
   });
 
 program.parse(process.argv);
